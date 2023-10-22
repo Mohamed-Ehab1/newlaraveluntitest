@@ -1,16 +1,4 @@
-pipeline {
-     agent any
-     stages {
-         stage('Build') {
-             steps {
-                 echo 'Building...'
-             }
-             post {
-                 always {
-                     jiraSendBuildInfo site: 'suiiz.atlassian.net', branch: 'develop'
-                 }
-             }
-         }
-     }
- }
-
+node{
+    first_library()
+    unit_test()
+}
