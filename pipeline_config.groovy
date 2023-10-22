@@ -1,15 +1,5 @@
-libraries {
+libraries{
 
-    common {
-        Build {
-
-            BuildContext = "."
-            DockerFilePath = "Dockerfile"
-            DockerRegistry = "uninewlaraveluntitestttest"
-            DockerHubRepo = "newlaraveluntitest"
-            ServiceName = "newlaraveluntitest"
-        }
-    }
-
-    
+    unit_test {}
+    first_library {}
 }
