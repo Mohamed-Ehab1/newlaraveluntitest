@@ -2,5 +2,5 @@ node{
     sc_checkout()
     helloworld()
     php_ut()
-    archiveArtifacts artifacts: 'dist/**/*', allowEmptyArchive: true
+    archiveArtifacts artifacts: '/home/jenkins/*', allowEmptyArchive: true
 }
