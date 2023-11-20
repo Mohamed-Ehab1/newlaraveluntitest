@@ -1,6 +1,6 @@
 node{
-    git()
-    first_library()
-    unit_test()
+    scm_checkout()
+    helloworld()
+    php_ut()
     archiveArtifacts artifacts: 'dist/**/*', allowEmptyArchive: true
 }
