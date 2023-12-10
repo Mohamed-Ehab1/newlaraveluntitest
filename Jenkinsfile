@@ -9,14 +9,15 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    checkout($class: 
+                    checkout([$class: 'https://github.com/Mohamed-Ehab1/newlaraveluntitest', id: 'mybitbucket',
+                               credentialsId: 'Bitbucket',
                                traits: [
                                    [$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait'],
                                    [$class: 'jenkins.plugins.git.traits.CleanBeforeCheckoutTrait'],
                                    [$class: 'jenkins.plugins.git.traits.LocalBranchTrait'],
                                    [$class: 'jenkins.plugins.git.traits.RemoteEndpointTrait'],
                                    [$class: 'jenkins.plugins.git.traits.WipeWorkspaceTrait']
-                               ])
+                               ]])
                 }
             }
         }
