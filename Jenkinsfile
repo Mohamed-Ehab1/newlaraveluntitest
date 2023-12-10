@@ -1,15 +1,39 @@
-node {
-    // Call the 'helloworld' library function
-    helloworld()
+pipeline {
+    agent any
 
-    // Check if it's a pull request targeting the main branch
-    def isPullRequestToMain = env.CHANGE_TARGET == 'main' && env.CHANGE_ID != null
+    environment {
+        BRANCH_NAME = "${env.CHANGE_ID}".replaceAll("[^a-zA-Z0-9]", "_")
+    }
 
-    // Run the Archive Artifacts stage only if it's a pull request to main
-    if (isPullRequestToMain) {
-        stage('Archive Artifacts') {
+    stages {
+        stage('Checkout') {
             steps {
-                archiveArtifacts artifacts: '**/*', onlyIfSuccessful: true
+                script {
+                    checkout([$class: 'BitbucketSCMSource', id: 'mybitbucket',
+                               credentialsId: 'your-credentials-id',
+                               traits: [
+                                   [$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait'],
+                                   [$class: 'jenkins.plugins.git.traits.CleanBeforeCheckoutTrait'],
+                                   [$class: 'jenkins.plugins.git.traits.LocalBranchTrait'],
+                                   [$class: 'jenkins.plugins.git.traits.RemoteEndpointTrait'],
+                                   [$class: 'jenkins.plugins.git.traits.WipeWorkspaceTrait']
+                               ]])
+                }
+            }
+        }
+
+        stage('Build and Test') {
+            steps {
+                echo "Building and testing..."
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                expression { BRANCH_NAME == 'dev' }
+            }
+            steps {
+                echo "Deploying..."
             }
         }
     }
