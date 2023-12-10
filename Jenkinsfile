@@ -9,15 +9,14 @@ pipeline {
         stage('Checkout') {
             steps {
                 script {
-                    checkout([$class: 'BitbucketSCMSource', id: 'mybitbucket',
-                               credentialsId: 'your-credentials-id',
+                    checkout($class: 
                                traits: [
                                    [$class: 'jenkins.plugins.git.traits.BranchDiscoveryTrait'],
                                    [$class: 'jenkins.plugins.git.traits.CleanBeforeCheckoutTrait'],
                                    [$class: 'jenkins.plugins.git.traits.LocalBranchTrait'],
                                    [$class: 'jenkins.plugins.git.traits.RemoteEndpointTrait'],
                                    [$class: 'jenkins.plugins.git.traits.WipeWorkspaceTrait']
-                               ]])
+                               ])
                 }
             }
         }
