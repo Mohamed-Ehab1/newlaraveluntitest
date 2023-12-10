@@ -2,19 +2,15 @@ node {
     // Call the 'helloworld' library function
     helloworld()
 
-    // Define the 'myPipeline' library function
-    def myPipeline = {
+    // Check if it's a pull request targeting the main branch
+    def isPullRequestToMain = env.CHANGE_TARGET == 'main' && env.CHANGE_ID != null
+
+    // Run the Archive Artifacts stage only if it's a pull request to main
+    if (isPullRequestToMain) {
         stage('Archive Artifacts') {
             steps {
                 archiveArtifacts artifacts: '**/*', onlyIfSuccessful: true
             }
         }
-    }
-
-    // Use 'when' directive
-    when {
-        // Run the pipeline only for pull requests targeting the main branch
-        beforeAgent true
-        expression { env.CHANGE_TARGET == 'main' && env.CHANGE_ID != null }
     }
 }
